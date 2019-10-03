@@ -106,14 +106,16 @@ public class VideoEditor extends CordovaPlugin {
         JSONObject options = args.optJSONObject(0);
         Log.d(TAG, "options: " + options.toString());
 
-        final File inFile = this.resolveLocalFileSystemURI(options.getString("fileUri"));
+        File inFile = this.resolveLocalFileSystemURI(options.getString("fileUri"));
         if (!inFile.exists()) {
             Log.d(TAG, "input file does not exist");
             callback.error("input video does not exist.");
             return;
         }
 
-        final String videoSrcPath = inFile.getAbsolutePath();
+        String videoSrcPath = inFile.getAbsolutePath();
+        Log.d(TAG, "videoSrcPath: " + videoSrcPath);
+        
         final String outputFileName = options.optString(
                 "outputFileName",
                 new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date())
@@ -125,8 +127,6 @@ public class VideoEditor extends CordovaPlugin {
         final int fps = options.optInt("fps", 24);
         final int videoBitrate = options.optInt("videoBitrate", 1000000); // default to 1 megabit
         final long videoDuration = options.optLong("duration", 0) * 1000 * 1000;
-
-        Log.d(TAG, "videoSrcPath: " + videoSrcPath);
 
         final String outputExtension = ".mp4";
 
@@ -280,18 +280,16 @@ public class VideoEditor extends CordovaPlugin {
         JSONObject options = args.optJSONObject(0);
         Log.d(TAG, "options: " + options.toString());
 
-        String fileUri = options.getString("fileUri");
-        if (!fileUri.startsWith("file:/")) {
-            fileUri = "file:/" + fileUri;
-        }
-
-        File inFile = this.resolveLocalFileSystemURI(fileUri);
+        File inFile = this.resolveLocalFileSystemURI(options.getString("fileUri"));
         if (!inFile.exists()) {
             Log.d(TAG, "input file does not exist");
             callback.error("input video does not exist.");
             return;
         }
-        final String srcVideoPath = inFile.getAbsolutePath();
+
+        String videoSrcPath = inFile.getAbsolutePath();
+        Log.d(TAG, "videoSrcPath: " + videoSrcPath);
+        
         String outputFileName = options.optString(
                 "outputFileName",
                 new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date())
