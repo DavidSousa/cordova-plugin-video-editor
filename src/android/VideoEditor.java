@@ -335,7 +335,7 @@ public class VideoEditor extends CordovaPlugin {
 
                 try {
                     MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                    mmr.setDataSource(srcVideoPath);
+                    mmr.setDataSource(videoSrcPath);
 
                     Bitmap bitmap = mmr.getFrameAtTime(atTime);
 
